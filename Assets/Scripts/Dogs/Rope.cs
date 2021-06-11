@@ -14,25 +14,30 @@ public class Rope : MonoBehaviour
     [SerializeField] private float ropeSegLen = 0.25f;
     [SerializeField] private int segmentLength = 35;
     [SerializeField] private float lineWidth = 0.1f;
+    [SerializeField] private float elasticForce = 200;
 
-    List<GameObject> colliders;
+   // List<GameObject> colliders;
     Vector2 forceGravity;
+
+    Rigidbody2D dogoRbody, pRbody;
     // Use this for initialization
     void Start()
     {
+        dogoRbody = DogoPoint.gameObject.GetComponent<Rigidbody2D>();
+        pRbody = PlayerPoint.gameObject.GetComponent<Rigidbody2D>();
         this.lineRenderer = this.GetComponent<LineRenderer>();
 
         Vector3 ropeStartPoint = PlayerPoint.position;
-        colliders = new List<GameObject>();
+       // colliders = new List<GameObject>();
         for (int i = 0; i < segmentLength; i++)
         {
             this.ropeSegments.Add(new RopeSegment(ropeStartPoint));
             ropeStartPoint.y -= ropeSegLen;
-            colliders.Add(new GameObject("ColliderRope", typeof(CircleCollider2D)));
-            colliders[i].transform.parent = transform;
-            CircleCollider2D collider = colliders[i].GetComponent<CircleCollider2D>();
-            collider.isTrigger = true;
-            collider.radius = lineWidth / 2;
+            //colliders.Add(new GameObject("ColliderRope", typeof(CircleCollider2D)));
+            //colliders[i].transform.parent = transform;
+            //CircleCollider2D collider = colliders[i].GetComponent<CircleCollider2D>();
+            //collider.isTrigger = true;
+            //collider.radius = lineWidth / 2;
             // collider.usedByComposite = true;
 
         }
@@ -119,9 +124,14 @@ public class Rope : MonoBehaviour
             }
 
             //physics
-            colliders[i].transform.position = ropeSegments[i].posNow;
+            //colliders[i].transform.position = ropeSegments[i].posNow;
         }
         forceGravity = new Vector2(0f, 0f);
+        if (Vector2.Distance(PlayerPoint.position, DogoPoint.position) > (ropeSegLen * segmentLength))
+        {
+            pRbody.AddForce((DogoPoint.position - PlayerPoint.position).normalized * elasticForce,ForceMode2D.Force);
+            dogoRbody.AddForce((PlayerPoint.position - DogoPoint.position).normalized * elasticForce, ForceMode2D.Force);
+        }
     }
 
     private void DrawRope()
@@ -152,13 +162,13 @@ public class Rope : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        Rigidbody2D rBody = collision.GetComponent<Rigidbody2D>();
-        if (rBody != null)
-        {
-            forceGravity = rBody.velocity.normalized;
-        }
+    //public void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    Rigidbody2D rBody = collision.GetComponent<Rigidbody2D>();
+    //    if (rBody != null)
+    //    {
+    //        forceGravity = rBody.velocity.normalized;
+    //    }
 
-    }
+    //}
 }
