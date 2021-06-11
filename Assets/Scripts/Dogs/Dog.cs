@@ -19,6 +19,7 @@ public class Dog : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         InvokeRepeating("RandomizeVelocity", randomizeFreq, randomizeFreq);
+        RandomizeVelocity();
     }
 
     // Update is called once per frame
@@ -38,7 +39,7 @@ public class Dog : MonoBehaviour
                 stopping = false;
             }
         }
-        else if (rb.velocity.sqrMagnitude < runSpeed)
+        else 
         {
             rb.AddForce(direction * Time.fixedDeltaTime * runAceleration);
         }
