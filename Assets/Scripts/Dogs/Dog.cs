@@ -33,9 +33,10 @@ public class Dog : MonoBehaviour
     private DogStates currentState;
     private float originalMass;
     private float originalLinearDrag;
-    private Target prey;
+    private Transform prey;
     private float timerChase;
     private float lastPooped;
+    private float stopChasingAt;
 
     private enum DogStates
     {
@@ -88,15 +89,15 @@ public class Dog : MonoBehaviour
         rb.AddForce(LimitMaxSpeedWalk(direction*runAceleration),ForceMode2D.Force);
     }
 
-    private void Chase(Target prey)
+    private void Chase(Transform prey)
     {
 
         timerChase += Time.fixedDeltaTime;
         if (timerChase >= timeToStartChase)
         {
             rb.mass = originalMass;
-            rb.AddForce(LimitMaxSpeedRun((prey.transform.position - transform.position).normalized * runAceleration), ForceMode2D.Force);
-            if (Vector2.Distance(transform.position, prey.transform.position) > chaseMaxDistance)
+            rb.AddForce(LimitMaxSpeedRun((prey.position - transform.position).normalized * runAceleration), ForceMode2D.Force);
+            if (Vector2.Distance(transform.position, prey.position) > chaseMaxDistance || Time.time >= stopChasingAt)
             {
                 ChangeStatus(DogStates.Idle);
             }
@@ -246,10 +247,12 @@ public class Dog : MonoBehaviour
     }
 
 
-    public bool StartChase(Target prey)
+    public bool StartChase(Transform prey, bool overrideable = false, float stopChasingAfter = float.MaxValue)
     {
-        if (currentState != DogStates.Running)
+        if (currentState != DogStates.Running || overrideable)
         {
+            stopChasingAt = Time.time + stopChasingAfter;
+
             this.prey = prey;
             CancelInvoke("ChangeStatus");
             audioSource.PlayOneShot(barkSound);

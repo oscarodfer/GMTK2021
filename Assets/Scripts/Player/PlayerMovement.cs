@@ -8,6 +8,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float maxSpeed;
     [SerializeField] float forceMultiplier =100000;
+    [SerializeField] float dogFollowTime;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip whistleSound;
 
     private const string AXIS_H = "horizontal";
     private const string AXIS_V = "vertical";
@@ -39,6 +42,16 @@ public class PlayerMovement : MonoBehaviour
             animator.Play("Player_poop");
             pickingUpPoop = true;
             rBody.velocity = new Vector2();
+        }
+
+        if (Controls.ActionDown)
+        {
+            audioSource.PlayOneShot(whistleSound);
+            var dogs = FindObjectsOfType<Dog>();
+            foreach(var dog in dogs)
+            {
+                dog.StartChase(transform, true, dogFollowTime);
+            }
         }
 
         forceToMove = new Vector2(Controls.Horizontal,Controls.Vertical);

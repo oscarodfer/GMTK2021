@@ -42,7 +42,7 @@ public class Target : MonoBehaviour
         Dog attackerDogo;
         if (collision.gameObject.TryGetComponent<Dog>(out attackerDogo))
         {
-           scared = attackerDogo.StartChase(this);
+           scared = attackerDogo.StartChase(this.transform);
         }
     }
 }

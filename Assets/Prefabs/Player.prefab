@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 10
   forceMultiplier: 150
+  dogFollowTime: 10
 --- !u!50 &1136187406752672720
 Rigidbody2D:
   serializedVersion: 4
