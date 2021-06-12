@@ -70,13 +70,13 @@ public class PlayerMovement : MonoBehaviour
     {
         forceToMove = forceToMove.normalized;
         forceToMove = LimitMaxSpeed(forceToMove);
-        Debug.Log(forceToMove);
+   
         rBody.AddForce(forceToMove * forceMultiplier, ForceMode2D.Force);
     }
 
     private Vector2 LimitMaxSpeed(Vector2 forceIntended)
     {
-        Debug.Log("Speed: X=" + rBody.velocity.x + " Y=" + rBody.velocity.y );
+        
         float x = forceIntended.x;
         float y = forceIntended.y;
         if (Mathf.Abs(rBody.velocity.x) > maxSpeed)

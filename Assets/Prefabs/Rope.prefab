@@ -48,7 +48,7 @@ MonoBehaviour:
   DogoPoint: {fileID: 0}
   ropeSegLen: 0.125
   segmentLength: 40
-  lineWidth: 0.05
+  lineWidth: 0.075
   elasticForce: 4
 --- !u!120 &1367215227305792096
 LineRenderer:
