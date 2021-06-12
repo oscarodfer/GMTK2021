@@ -9,6 +9,7 @@ public static class Controls
 {
 
     private static bool spaceUp, spaceDown, spacePressed;
+    private static bool actionUp, actionDown, actionPressed;
 
     private static float horizontal, vertical;
     private static bool scapeUp, scapeDown, scapePressed;
@@ -16,6 +17,10 @@ public static class Controls
     public static bool SpaceUp { get => spaceUp; }
     public static bool SpaceDown { get => spaceDown; }
     public static bool SpacePressed { get => spacePressed; }
+
+    public static bool ActionUp { get => actionUp; }
+    public static bool ActionDown { get => actionDown; }
+    public static bool ActionPressed { get => actionPressed; }
 
 
     public static float Horizontal { get => horizontal; }
@@ -37,6 +42,7 @@ public static class Controls
         GetAxis();
         GetAction();
         GetMenu();
+        GetAction();
     }
 
 
@@ -62,7 +68,9 @@ public static class Controls
 
     private static void GetAction()
     {
-        //Not for this project
+        actionDown = Input.GetKeyDown(KeyCode.E);
+        actionUp = Input.GetKeyUp(KeyCode.E);
+        actionPressed = Input.GetKey(KeyCode.E);
     }
 
     private static void GetMenu()
