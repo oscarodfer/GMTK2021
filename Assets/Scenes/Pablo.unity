@@ -293,6 +293,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1338149658873910165, guid: 94e736be472fbf74a9c389c8b2b8be7b, type: 3}
+      propertyPath: minTimeBetweenPoops
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 1338149658873910166, guid: 94e736be472fbf74a9c389c8b2b8be7b, type: 3}
       propertyPath: m_RootOrder
       value: 3

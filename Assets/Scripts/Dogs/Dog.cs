@@ -17,6 +17,7 @@ public class Dog : MonoBehaviour
     [Header("Time Ranges")]
     [SerializeField] float poopMinTime;
     [SerializeField] float poopMaxTime;
+    [SerializeField] float minTimeBetweenPoops;
     [SerializeField] float walkMinTime, walkMaxTime;
     [SerializeField] float idleMinTime, idleMaxTime;
 
@@ -34,6 +35,7 @@ public class Dog : MonoBehaviour
     private float originalLinearDrag;
     private Target prey;
     private float timerChase;
+    private float lastPooped;
 
     private enum DogStates
     {
@@ -173,6 +175,7 @@ public class Dog : MonoBehaviour
                 currentState = newStatus;
                 rb.mass = float.MaxValue;
                 rb.velocity = Vector2.zero;
+                lastPooped = Time.time;
                 Instantiate(poopPrefab, transform.position, Quaternion.identity);
                 Invoke("ChangeStatus", UnityEngine.Random.Range(poopMinTime, poopMaxTime));
                 break;
@@ -207,6 +210,7 @@ public class Dog : MonoBehaviour
                 currentState = newStatus;
                 rb.mass = float.MaxValue;
                 rb.velocity = Vector2.zero;
+                lastPooped = Time.time;
                 Instantiate(poopPrefab, transform.position, Quaternion.identity);
                 Invoke("ChangeStatus", UnityEngine.Random.Range(poopMinTime, poopMaxTime));
                 break;
@@ -220,10 +224,15 @@ public class Dog : MonoBehaviour
         DogStates newState;
       
         Array values = Enum.GetValues(typeof(DogStates));
-        Array filteredValues = Array.CreateInstance(DogStates.Idle.GetType(),values.Length-2); //Not running
+
+        bool canPoop = Time.time - lastPooped > minTimeBetweenPoops; // TODO: Max number of poops per dog
+
+        Array filteredValues = Array.CreateInstance(DogStates.Idle.GetType(),values.Length-2 - (canPoop || currentState == DogStates.Pooping ? 0 : 1)); //Not running and maybe not pooping
         int i = 0;
         foreach (DogStates dogValue in values)
         {
+            if (dogValue == DogStates.Pooping && !canPoop) continue;
+
             if (dogValue != DogStates.Running && dogValue != currentState)
             {
                 filteredValues.SetValue(dogValue, i);
@@ -232,7 +241,7 @@ public class Dog : MonoBehaviour
         }
         
         newState = (DogStates)filteredValues.GetValue(UnityEngine.Random.Range(0, filteredValues.Length));
-        
+
         return newState;
     }
 

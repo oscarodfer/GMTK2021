@@ -75,6 +75,7 @@ MonoBehaviour:
   randomizeFreq: 5
   poopMinTime: 2
   poopMaxTime: 4
+  minTimeBetweenPoops: 15
   walkMinTime: 1
   walkMaxTime: 5
   idleMinTime: 1
