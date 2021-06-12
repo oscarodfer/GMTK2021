@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb48dd30d6d64e4c923517f5b55710a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnFreq: 2
+  spawnFreq: 4
   cars:
   - {fileID: 7178754106522107714, guid: 0aa5661c4c16d8c47a19e2452c9eeb7f, type: 3}
   - {fileID: 3221871341323339255, guid: 690da1d0fe341534fba9752f4562069f, type: 3}
