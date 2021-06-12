@@ -111,10 +111,10 @@ public class PlayerMovement : MonoBehaviour
         return new Vector2(x, y);
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (col.tag == "Poop")
-            closeByPoop = col.gameObject;
+        if (other.tag == "Poop")
+            closeByPoop = other.gameObject;
     }
 
     void OnTriggerExit2D(Collider2D other)

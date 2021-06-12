@@ -37,6 +37,7 @@ public class Dog : MonoBehaviour
     private float timerChase;
     private float lastPooped;
     private float stopChasingAt;
+    private Transform player;
 
     private enum DogStates
     {
@@ -49,7 +50,7 @@ public class Dog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindObjectOfType<PlayerMovement>().transform;
         rb = GetComponent<Rigidbody2D>();
         originalMass = rb.mass;
         originalLinearDrag = rb.drag;
@@ -146,14 +147,16 @@ public class Dog : MonoBehaviour
 
     private void RandomizeVelocity()
     {
-        direction = UnityEngine.Random.insideUnitCircle.normalized;
-        
+        //direction = UnityEngine.Random.insideUnitCircle.normalized;
+        direction = (player.position - transform.position
+            + new Vector3(  UnityEngine.Random.Range(0, 0.1f),
+                            UnityEngine.Random.Range(0, 0.1f))).normalized;
     }
 
     private void ChangeStatus()
     {
         DogStates newStatus = GiveNewStatus();
-        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:
@@ -188,7 +191,7 @@ public class Dog : MonoBehaviour
     private void ChangeStatus(DogStates newStatus)
     {
        
-        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:
