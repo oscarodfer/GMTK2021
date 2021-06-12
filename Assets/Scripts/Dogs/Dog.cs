@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Dog : MonoBehaviour
 {
     [SerializeField] float walkSpeed;
+    [SerializeField] float runSpeed;
     [SerializeField] float runAceleration;
     [SerializeField] float stopAceleration;
     [SerializeField] float randomizeFreq;
@@ -21,19 +23,24 @@ public class Dog : MonoBehaviour
 
     [Header("Other stuff")]
     [SerializeField] GameObject poopPrefab;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip barkSound;
+    [SerializeField] float chaseMaxDistance = 8;
+    [SerializeField] float timeToStartChase;
     private Rigidbody2D rb;
     private Vector2 direction;
-    private bool stopping = false;
     private DogStates currentState;
     private float originalMass;
     private float originalLinearDrag;
+    private Target prey;
+    private float timerChase;
 
     private enum DogStates
     {
-        Idle,
-        Walking,
-        Running,
-        Pooping
+        Idle = 1,
+        Walking = 2,
+        Running = 3,
+        Pooping = 4
     }
 
     // Start is called before the first frame update
@@ -65,41 +72,68 @@ public class Dog : MonoBehaviour
                 Walk();
                 break;
             case DogStates.Running:
+                Chase(prey);
                 break;
             case DogStates.Pooping:
+                //Do nothing! Just poop.
                 break;
 
         }
-        //if (stopping)
-        //{
-        //    rb.AddForce(rb.velocity.normalized * Time.fixedDeltaTime * -stopAceleration);
-        //    if (rb.velocity.sqrMagnitude < 1)
-        //    {
-        //        rb.velocity = new Vector2();
-        //        stopping = false;
-        //    }
-        //}
-        //else 
-        //{
-        //    rb.AddForce(direction * Time.fixedDeltaTime * runAceleration);
-        //}
+
     }
     private void Walk()
     {
-        rb.AddForce(LimitMaxSpeed(direction*runAceleration),ForceMode2D.Force);
+        rb.AddForce(LimitMaxSpeedWalk(direction*runAceleration),ForceMode2D.Force);
     }
 
-    private Vector2 LimitMaxSpeed(Vector2 forceIntended)
+    private void Chase(Target prey)
     {
 
-        float x = forceIntended.x;
-        float y = forceIntended.y;
+        timerChase += Time.fixedDeltaTime;
+        if (timerChase >= timeToStartChase)
+        {
+            rb.mass = originalMass;
+            rb.AddForce(LimitMaxSpeedRun((prey.transform.position - transform.position).normalized * runAceleration), ForceMode2D.Force);
+            if (Vector2.Distance(transform.position, prey.transform.position) > chaseMaxDistance)
+            {
+                ChangeStatus(DogStates.Idle);
+            }
+        }
+        else
+        {
+            rb.mass = float.MaxValue;
+        }
+    }
+
+    private Vector2 LimitMaxSpeedWalk(Vector2 directionIntended)
+    {
+
+        float x = directionIntended.x;
+        float y = directionIntended.y;
         if (Mathf.Abs(rb.velocity.x) > walkSpeed)
         {
             x = 0;
         }
 
         if (Mathf.Abs(rb.velocity.y) > walkSpeed)
+        {
+            y = 0;
+        }
+
+        return new Vector2(x, y);
+    }
+
+    private Vector2 LimitMaxSpeedRun(Vector2 directionIntended)
+    {
+
+        float x = directionIntended.x;
+        float y = directionIntended.y;
+        if (Mathf.Abs(rb.velocity.x) > runSpeed)
+        {
+            x = 0;
+        }
+
+        if (Mathf.Abs(rb.velocity.y) > runSpeed)
         {
             y = 0;
         }
@@ -147,6 +181,40 @@ public class Dog : MonoBehaviour
         
     }
 
+    private void ChangeStatus(DogStates newStatus)
+    {
+       
+        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        switch (newStatus)
+        {
+            case DogStates.Idle:
+                currentState = newStatus;
+                rb.mass = originalMass;
+                Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
+                break;
+            case DogStates.Walking:
+                currentState = newStatus;
+                rb.mass = originalMass;
+                RandomizeVelocity();
+                Invoke("ChangeStatus", UnityEngine.Random.Range(walkMinTime, walkMaxTime));
+                break;
+            case DogStates.Running:
+                currentState = newStatus;
+                rb.mass = originalMass;
+                //Call invoke when the target to chase is gone
+                break;
+            case DogStates.Pooping:
+                currentState = newStatus;
+                rb.mass = float.MaxValue;
+                rb.velocity = Vector2.zero;
+                Instantiate(poopPrefab, transform.position, Quaternion.identity);
+                Invoke("ChangeStatus", UnityEngine.Random.Range(poopMinTime, poopMaxTime));
+                break;
+
+        }
+
+    }
+
     private DogStates GiveNewStatus()
     {
         DogStates newState;
@@ -166,5 +234,26 @@ public class Dog : MonoBehaviour
         newState = (DogStates)filteredValues.GetValue(UnityEngine.Random.Range(0, filteredValues.Length));
         
         return newState;
+    }
+
+
+    public bool StartChase(Target prey)
+    {
+        if (currentState != DogStates.Running)
+        {
+            this.prey = prey;
+            CancelInvoke("ChangeStatus");
+            audioSource.PlayOneShot(barkSound);
+            timerChase = 0;
+
+            //change status
+            currentState = DogStates.Running;
+            rb.mass = originalMass;
+
+
+            //start attack
+            return true;
+        }
+        return false;
     }
 }
