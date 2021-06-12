@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private const string LAST_H = "lastHorizontal";
     private const string LAST_V = "lastVertical";
     private const string IS_RUNNING = "isRunning";
+    private const string IS_DRAGGED = "isDragged";
 
     Rigidbody2D rBody;
     Animator animator;
@@ -41,10 +42,6 @@ public class PlayerMovement : MonoBehaviour
         {
             lastDirection.x = -1;
         }
-        else
-        {
-            lastDirection.x = 0;
-        }
 
         if (forceToMove.y > 0.0f)
         {
@@ -54,14 +51,11 @@ public class PlayerMovement : MonoBehaviour
         {
             lastDirection.y = -1;
         }
-        else
-        {
-            lastDirection.y = 0;
-        }
 
         animator.SetFloat(AXIS_H, rBody.velocity.x);
         animator.SetFloat(AXIS_V, rBody.velocity.y);
-        animator.SetBool(IS_RUNNING, rBody.velocity != Vector2.zero);
+        animator.SetBool(IS_RUNNING, forceToMove != Vector2.zero);
+        animator.SetBool(IS_DRAGGED, rBody.velocity != Vector2.zero);
         animator.SetFloat(LAST_H, lastDirection.x);
         animator.SetFloat(LAST_V, lastDirection.y);
     }
