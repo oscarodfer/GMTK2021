@@ -156,7 +156,7 @@ public class Dog : MonoBehaviour
     private void ChangeStatus()
     {
         DogStates newStatus = GiveNewStatus();
-        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:
@@ -191,7 +191,7 @@ public class Dog : MonoBehaviour
     private void ChangeStatus(DogStates newStatus)
     {
        
-        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:

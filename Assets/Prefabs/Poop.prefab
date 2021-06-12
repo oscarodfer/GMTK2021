@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5802478739481659327}
   - component: {fileID: -2083308343315276341}
   - component: {fileID: 8960953578895107751}
+  - component: {fileID: 4608675926487109524}
   m_Layer: 0
   m_Name: Poop
   m_TagString: Poop
@@ -151,3 +152,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &4608675926487109524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5802478739481659326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 327fa591fb690b24bad1ee2d52d0f07f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDie: 20
+  maxVibrationAmplitude: 0.07
+  maxVibrationFrequency: 20000
