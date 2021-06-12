@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< Updated upstream
   - Poop
+=======
+  - Environment
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -42,9 +46,18 @@ TagManager:
   - name: Background
     uniqueID: 3616466193
     locked: 0
+  - name: Background Details
+    uniqueID: 2319733379
+    locked: 0
   - name: Rope
     uniqueID: 4281528025
     locked: 0
+  - name: Foreground
+    uniqueID: 955379077
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground Details
+    uniqueID: 2693687683
     locked: 0
