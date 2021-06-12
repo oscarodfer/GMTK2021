@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     Vector2 forceToMove;
     Vector2 lastDirection;
+    GameObject closeByPoop;
+    bool pickingUpPoop;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,13 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Controls.SpaceDown && closeByPoop != null)
+        {
+            animator.Play("Player_poop");
+            pickingUpPoop = true;
+            rBody.velocity = new Vector2();
+        }
+
         forceToMove = new Vector2(Controls.Horizontal,Controls.Vertical);
 
         if (forceToMove.x > 0.0f)
@@ -62,6 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (pickingUpPoop)
+            return;
+
         forceToMove = forceToMove.normalized;
         forceToMove = LimitMaxSpeed(forceToMove);
    
@@ -84,5 +96,25 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return new Vector2(x, y);
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.tag == "Poop")
+            closeByPoop = col.gameObject;
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject == closeByPoop)
+            closeByPoop = null;
+    }
+
+    private void PickUpPoop()
+    {
+        Destroy(closeByPoop);
+        closeByPoop = null;
+        pickingUpPoop = false;
+        animator.Play("Player_idle");
     }
 }
