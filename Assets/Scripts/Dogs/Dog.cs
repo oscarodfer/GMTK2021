@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Dog : MonoBehaviour
 {
-    [SerializeField] float runSpeed;
+    [SerializeField] float walkSpeed;
     [SerializeField] float runAceleration;
     [SerializeField] float stopAceleration;
     [SerializeField] float randomizeFreq;
@@ -18,6 +18,9 @@ public class Dog : MonoBehaviour
     [SerializeField] float walkMinTime, walkMaxTime;
     [SerializeField] float idleMinTime, idleMaxTime;
 
+
+    [Header("Other stuff")]
+    [SerializeField] GameObject poopPrefab;
     private Rigidbody2D rb;
     private Vector2 direction;
     private bool stopping = false;
@@ -59,6 +62,7 @@ public class Dog : MonoBehaviour
                 //Do Nothing. Allow to be pushed
                 break;
             case DogStates.Walking:
+                Walk();
                 break;
             case DogStates.Running:
                 break;
@@ -80,11 +84,33 @@ public class Dog : MonoBehaviour
         //    rb.AddForce(direction * Time.fixedDeltaTime * runAceleration);
         //}
     }
+    private void Walk()
+    {
+        rb.AddForce(LimitMaxSpeed(direction*runAceleration),ForceMode2D.Force);
+    }
+
+    private Vector2 LimitMaxSpeed(Vector2 forceIntended)
+    {
+
+        float x = forceIntended.x;
+        float y = forceIntended.y;
+        if (Mathf.Abs(rb.velocity.x) > walkSpeed)
+        {
+            x = 0;
+        }
+
+        if (Mathf.Abs(rb.velocity.y) > walkSpeed)
+        {
+            y = 0;
+        }
+
+        return new Vector2(x, y);
+    }
 
     private void RandomizeVelocity()
     {
         direction = UnityEngine.Random.insideUnitCircle.normalized;
-        stopping = true;
+        
     }
 
     private void ChangeStatus()
@@ -101,17 +127,19 @@ public class Dog : MonoBehaviour
             case DogStates.Walking:
                 currentState = newStatus;
                 rb.mass = originalMass;
+                RandomizeVelocity();
                 Invoke("ChangeStatus", UnityEngine.Random.Range(walkMinTime, walkMaxTime));
                 break;
             case DogStates.Running:
                 currentState = newStatus;
                 rb.mass = originalMass;
-                //Call invoke when the targe to chase is gone
+                //Call invoke when the target to chase is gone
                 break;
             case DogStates.Pooping:
                 currentState = newStatus;
                 rb.mass = float.MaxValue;
                 rb.velocity = Vector2.zero;
+                Instantiate(poopPrefab, transform.position, Quaternion.identity);
                 Invoke("ChangeStatus", UnityEngine.Random.Range(poopMinTime, poopMaxTime));
                 break;
 

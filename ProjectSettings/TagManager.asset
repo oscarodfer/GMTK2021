@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3616466193
+    locked: 0
+  - name: Poo
+    uniqueID: 4281528025
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

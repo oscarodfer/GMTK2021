@@ -172,7 +172,7 @@ MonoBehaviour:
   m_RefResolutionX: 512
   m_RefResolutionY: 288
   m_UpscaleRT: 0
-  m_PixelSnapping: 1
+  m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 1
@@ -456,10 +456,6 @@ PrefabInstance:
       value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -16.02932
-      objectReference: {fileID: 0}
-    - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
@@ -635,7 +631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.02932
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -773,7 +769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.02932
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1367215227305792102, guid: 5fc79f4ee4c7e814f9e819e896e6685f, type: 3}
       propertyPath: m_LocalRotation.w
