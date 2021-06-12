@@ -5,13 +5,16 @@ using UnityEngine;
 public class TargetBird : Target
 {
     Animator anim;
+    SpriteRenderer sRenderer;
     [SerializeField] float speedToFly = 10;
+    
     bool destroying ;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
         anim= GetComponent<Animator>();
+        sRenderer = GetComponent<SpriteRenderer>();
         destroying = false;
     }
 
@@ -28,7 +31,7 @@ public class TargetBird : Target
             }
             //animation to scape and movement
             anim.SetTrigger("FlyAway");
-
+            sRenderer.flipX = true;
             transform.Translate(new Vector2(Time.deltaTime * speedToFly, 0.2f * Time.deltaTime * speedToFly));
         }
     }
