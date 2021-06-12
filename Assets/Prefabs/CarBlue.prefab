@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7178754106522107717}
   - component: {fileID: 7178754106522107716}
   - component: {fileID: 7178754106522107715}
+  - component: {fileID: 9048998459494362983}
   m_Layer: 0
   m_Name: CarBlue
   m_TagString: Untagged
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &9048998459494362983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7178754106522107714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c7c7040ee79f54692600ba1abc01d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5

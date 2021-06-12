@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6732422531591209810}
   - component: {fileID: 6732422531591209811}
   - component: {fileID: 6732422531591209808}
+  - component: {fileID: 5349594939973601135}
   m_Layer: 0
   m_Name: CarOrange
   m_TagString: Untagged
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &5349594939973601135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6732422531591209809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c7c7040ee79f54692600ba1abc01d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5

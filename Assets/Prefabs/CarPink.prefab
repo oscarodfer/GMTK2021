@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 796589651212597568}
   - component: {fileID: 796589651212597575}
   - component: {fileID: 796589651212597574}
+  - component: {fileID: -5889076921838836146}
   m_Layer: 0
   m_Name: CarPink
   m_TagString: Untagged
@@ -109,3 +110,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-5889076921838836146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796589651212597573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c7c7040ee79f54692600ba1abc01d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
