@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 451df06fcab370e49b665b321a11abd1
+guid: dad8eacaf58147c458e7409171430158
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2344326656129224943
-    second: Player_run_up_0
+      213: 5139533282020758613
+    second: Player_run_left_0
   - first:
-      213: -3327133116147211217
-    second: Player_run_up_1
+      213: -8447405735938822496
+    second: Player_run_left_1
   - first:
-      213: 4865218329657158934
-    second: Player_run_up_2
+      213: -6721057231389407681
+    second: Player_run_left_2
   - first:
-      213: 3965779033673810165
-    second: Player_run_up_3
+      213: 5011859908964947768
+    second: Player_run_left_3
   - first:
-      213: 4715051385645741833
-    second: Player_run_up_4
+      213: -7290467973118328304
+    second: Player_run_left_4
   - first:
-      213: -4920300395627731609
-    second: Player_run_up_5
+      213: 2039278434988716987
+    second: Player_run_left_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,7 +121,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_run_up_0
+      name: Player_run_left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +135,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11f20f7b357477fd0800000000000000
-      internalID: -2344326656129224943
+      spriteID: 55415222a4a435740800000000000000
+      internalID: 5139533282020758613
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_run_up_1
+      name: Player_run_left_1
       rect:
         serializedVersion: 2
         x: 32
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f246b9b0f06a3d1d0800000000000000
-      internalID: -3327133116147211217
+      spriteID: 0aee4cb4d39c4ca80800000000000000
+      internalID: -8447405735938822496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_run_up_2
+      name: Player_run_left_2
       rect:
         serializedVersion: 2
         x: 64
@@ -177,14 +177,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61d2fe53b4ab48340800000000000000
-      internalID: 4865218329657158934
+      spriteID: f36c6f7ce020ab2a0800000000000000
+      internalID: -6721057231389407681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_run_up_3
+      name: Player_run_left_3
       rect:
         serializedVersion: 2
         x: 0
@@ -198,14 +198,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f0c1dff407490730800000000000000
-      internalID: 3965779033673810165
+      spriteID: 83790e18804bd8540800000000000000
+      internalID: 5011859908964947768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_run_up_4
+      name: Player_run_left_4
       rect:
         serializedVersion: 2
         x: 32
@@ -219,14 +219,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 907b02bf04a3f6140800000000000000
-      internalID: 4715051385645741833
+      spriteID: 0128be7410e03da90800000000000000
+      internalID: -7290467973118328304
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_run_up_5
+      name: Player_run_left_5
       rect:
         serializedVersion: 2
         x: 64
@@ -240,8 +240,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 765256aebd497bbb0800000000000000
-      internalID: -4920300395627731609
+      spriteID: bb3fd9b9ee8fc4c10800000000000000
+      internalID: 2039278434988716987
       vertices: []
       indices: 
       edges: []
