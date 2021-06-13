@@ -7,13 +7,13 @@ public class Car : MonoBehaviour
     [SerializeField] float speed = 5;
 
     private Transform target;
-
+    BoxCollider2D boxColl;
+    Car carCollision;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        boxColl = GetComponent<BoxCollider2D>();
     }
-
     private void Update()
     {
         if ((target.position - transform.position).sqrMagnitude < 1)
@@ -23,7 +23,13 @@ public class Car : MonoBehaviour
     void FixedUpdate()
     {
         var wantedDir = (target.position - transform.position).normalized;
-        transform.Translate(wantedDir * Time.fixedDeltaTime * speed, Space.World);
+
+     
+
+        RaycastHit2D hit= Physics2D.Raycast((transform.position + (wantedDir * (boxColl.size.y/2)*1.05f))  , wantedDir, 1);
+
+        if (!(hit.collider != null && hit.collider.gameObject.TryGetComponent<Car>(out carCollision)))
+            transform.Translate(wantedDir * Time.fixedDeltaTime * speed, Space.World);
     }
 
     public void SetTarget(Transform target)

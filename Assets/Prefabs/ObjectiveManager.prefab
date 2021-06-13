@@ -49,3 +49,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  initialTimeInSeconds: 120
+  timer: {fileID: 0}
