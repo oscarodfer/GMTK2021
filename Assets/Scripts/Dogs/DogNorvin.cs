@@ -193,7 +193,6 @@ public class Dog : MonoBehaviour
         {
             audioSource.PlayOneShot(barkSound);            
         }
-
         timer = Random.Range(1, 3);
         while (currentState == DogStates.Running && timer > 0)
         {
