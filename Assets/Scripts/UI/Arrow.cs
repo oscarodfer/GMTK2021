@@ -26,4 +26,9 @@ public class Arrow : MonoBehaviour
         }
         
     }
+
+    public void SetObjective(Transform obj)
+    {
+        target = obj;
+    }
 }

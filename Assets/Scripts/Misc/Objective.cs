@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Objective : MonoBehaviour
 {
+    public delegate void ObjectiveEventHandler(Objective obj);
+    public event ObjectiveEventHandler objectiveReachedEvent;
 
     [SerializeField] float maxRadius =1;
     [SerializeField] float minRadius = 0.25f;
@@ -69,11 +73,18 @@ public class Objective : MonoBehaviour
         activated = true;
         aSource.PlayOneShot(achievedSound);
         anim.SetTrigger("Activated");
+        objectiveReachedEvent?.Invoke(this);
     }
 
-    private void DestroyMe()
+    private void DisableMe()
     {
-        Destroy(gameObject);
+        
+        activated = false;
+        anim.Play("Idle");
+        transparency = 1;
+        gameObject.SetActive(false);
+        radius = 0;
+        LineDrawer.materials[0].color = new Color(LineDrawer.materials[0].color.r, LineDrawer.materials[0].color.g, LineDrawer.materials[0].color.b, transparency);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
