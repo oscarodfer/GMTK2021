@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 lastDirection;
     GameObject closeByPoop;
     bool pickingUpPoop;
+    bool whistling;
     int whistlesAvailable;
     float hitAt;
 
@@ -67,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Controls.ActionDown && whistlesAvailable >0)
         {
+            whistling = true;
+            Invoke("StopWhistling", 1);
             audioSource.PlayOneShot(whistleSound);
             Invoke("CallForDogs",whistleSound.length);
             whistlesAvailable--;
@@ -97,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (forceToMove != Vector2.zero && rBody.velocity != Vector2.zero && !audioSource.isPlaying)
             audioSource.Play();
-        else if (forceToMove == Vector2.zero || rBody.velocity == Vector2.zero)
+        else if ((forceToMove == Vector2.zero || rBody.velocity == Vector2.zero) && !whistling)
             audioSource.Stop();
 
         animator.SetFloat(AXIS_H, rBody.velocity.x);
@@ -120,6 +123,11 @@ public class PlayerMovement : MonoBehaviour
         forceToMove = LimitMaxSpeed(forceToMove);
    
         rBody.AddForce(forceToMove * forceMultiplier, ForceMode2D.Force);
+    }
+    
+    private void StopWhistling()
+    {
+        whistling = false;
     }
 
     private Vector2 LimitMaxSpeed(Vector2 forceIntended)
