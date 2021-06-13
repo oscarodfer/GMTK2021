@@ -59,8 +59,8 @@ public class Dog : MonoBehaviour
     {
         Idle = 1,
         Walking = 2,
-        Running = 3,
-        Pooping = 4
+        Pooping = 3,
+        Running = 4        
     }
 
     // Start is called before the first frame update
@@ -80,9 +80,8 @@ public class Dog : MonoBehaviour
         spriteRender = GetComponent<SpriteRenderer>();
 
         currentState = DogStates.Walking;
-        targetDirection = Vector3.up * Random.value + Vector3.left * Random.value;
         StartCoroutine(Walk());
-
+        targetDirection = Vector3.up * Random.value + Vector3.left * Random.value;        
     }
 
     // Update is called once per frame
@@ -108,7 +107,7 @@ public class Dog : MonoBehaviour
         int count = 5;
         while (testCollision && (testCollision.name == "Background" || testCollision.name == "Foreground") && count > 0)
         {
-            Debug.Log(testCollision.name);
+            //Debug.Log(testCollision.name);
             targetPosition = player.transform.position + Vector3.up * Random.Range(-1, 1) + Vector3.left * Random.Range(-1, 1);
             testCollision = Physics2D.OverlapCircle(targetPosition, 0.01f);
             count--;
@@ -119,15 +118,9 @@ public class Dog : MonoBehaviour
 
     public void SelectNextState()
     {
-        int nextState = Random.Range(1, 6);
-        // to make 20% more likely to select walking.
-        if (nextState > 5)
-        {
-            currentState = (DogStates)nextState - 5;
-        }else
-        {
-            currentState = (DogStates)2;
-        }        
+        Debug.Log("Selecting next state");
+        int nextState = Random.Range(1, 4);
+        // to make 20% more likely to select walking.                
         switch(currentState)
         {
             case DogStates.Walking:
@@ -138,18 +131,14 @@ public class Dog : MonoBehaviour
                 break;
             case DogStates.Idle:
                 StartCoroutine(Iddle());
-                break;
-            case DogStates.Running:
-                StartCoroutine(Run());
-                break;            
+                break;                 
         }
     }
-
-    
 
 
     IEnumerator Walk()
     {
+        Debug.Log("Walking");
         animator.SetBool("isRunning", true);
         GetNewTarget();        
         if (Random.Range(1, 5) < 2)
@@ -159,17 +148,23 @@ public class Dog : MonoBehaviour
         }
         timer = Random.Range(walkMinTime, walkMaxTime);
         while (currentState == DogStates.Walking && timer > 0)
-        {
-            
-            if ((targetPosition - (Vector3)rbd.position).magnitude > walkSpeed * Time.deltaTime)
+        {            
+            if ((targetPosition - (Vector3)rbd.position).magnitude > walkSpeed * Time.fixedDeltaTime)
             {
                 targetDirection = (targetPosition - (Vector3)rbd.position).normalized;
-                rbd.MovePosition(rbd.position + (Vector2)targetDirection * walkSpeed * Time.deltaTime);             
+                rbd.MovePosition(rbd.position + (Vector2)targetDirection * walkSpeed * Time.fixedDeltaTime);             
             }else
             {
                 GetNewTarget();
             }
             timer -= Time.deltaTime;
+
+            if (Random.Range(1, 100) < 35)
+            {
+
+            }
+
+
             yield return new WaitForEndOfFrame();
         }
         SelectNextState();
@@ -177,26 +172,56 @@ public class Dog : MonoBehaviour
 
     IEnumerator Iddle()
     {
-        animator.SetBool("isRunning", false);
         Debug.Log("Iddle");
-        yield return new WaitForSeconds(Random.Range(idleMinTime, idleMaxTime));
+        animator.SetBool("isRunning", false);
+        timer = Random.Range(idleMinTime, idleMaxTime);
+        while (timer > 0 && currentState == DogStates.Idle)
+        {
+            timer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }        
         SelectNextState();
     }
 
-    IEnumerator Run()
+    IEnumerator Chase(Transform prey)
     {
+        Debug.Log("Chase");
         animator.SetBool("isRunning", true);
-        Debug.Log("Run");
-        yield return new WaitForSeconds(Random.Range(idleMinTime, idleMaxTime));
+        float range = 0.25f;
+        targetPosition = prey.position + Vector3.up * Random.Range(-range, range) + Vector3.left * Random.Range(-range, range);
+
+        if (Random.Range(1, 5) < 2)
+        {
+            audioSource.PlayOneShot(barkSound);            
+        }
+        timer = Random.Range(1, 3);
+        while (currentState == DogStates.Running && timer > 0)
+        {
+            if ((targetPosition - (Vector3)rbd.position).magnitude > runSpeed * Time.fixedDeltaTime)
+            {
+                targetDirection = (targetPosition - (Vector3)rbd.position).normalized;
+                rbd.MovePosition(rbd.position + (Vector2)targetDirection * runSpeed * Time.fixedDeltaTime);
+            }else
+            {
+                targetPosition = prey.position + Vector3.up * Random.Range(-range, range) + Vector3.left * Random.Range(-range, range);
+            }
+            timer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
         SelectNextState();
     }
 
     IEnumerator Poop()
     {
-        animator.SetBool("isPooping", true);        
         Debug.Log("Poop");
+        animator.SetBool("isPooping", true);                
+        timer = Random.Range(poopMinTime, poopMaxTime);
         Instantiate(poopPrefab, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(Random.Range(poopMinTime, poopMaxTime));
+        while (timer > 0 && currentState == DogStates.Pooping)
+        {
+            timer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }                    
         SelectNextState();
     }
 
@@ -393,14 +418,18 @@ public class Dog : MonoBehaviour
 
     public void Hit(Vector2 launchDirection)
     {
-        audioSource.PlayOneShot(barkSound);
-        //ChangeStatus(DogStates.Idle);
-        rbd.velocity = launchDirection * launchSpeed;
+        currentState = DogStates.Idle;
+        StartCoroutine(Iddle());
+        audioSource.PlayOneShot(barkSound);        
+        rbd.AddForce(launchDirection * launchSpeed * 10);
         scoreManager.AddRanOver();
     }
 
     public bool StartChase(Transform prey, bool overrideable = false, float stopChasingAfter = float.MaxValue)
     {
+        float range = 0.25f;        
+        currentState = DogStates.Running;
+        StartCoroutine(Chase(prey));
         return false;
     }
 }
