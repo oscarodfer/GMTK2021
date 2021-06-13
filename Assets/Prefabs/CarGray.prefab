@@ -125,6 +125,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   bumpSound: {fileID: 8300000, guid: 76c12e2baa4840a4da3360f4d9a86354, type: 3}
+  honkSounds:
+  - {fileID: 8300000, guid: f3f6e67e0be37154d92505a1bae3c9c7, type: 3}
+  - {fileID: 8300000, guid: dea3fd18c9cf07b4ab0743e0e5b343fc, type: 3}
 --- !u!82 &-177456050973701012
 AudioSource:
   m_ObjectHideFlags: 0
@@ -137,7 +140,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
