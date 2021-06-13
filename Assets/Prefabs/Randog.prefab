@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4130403790892033056}
   m_Layer: 6
   m_Name: Randog
-  m_TagString: Untagged
+  m_TagString: Dawg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,6 +73,7 @@ MonoBehaviour:
   runAceleration: 200
   stopAceleration: 3000
   randomizeFreq: 5
+  launchSpeed: 40
   poopMinTime: 1
   poopMaxTime: 3
   minTimeBetweenPoops: 30

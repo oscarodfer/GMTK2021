@@ -122397,6 +122397,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1136187406752672734, guid: 4186e9b28b6a2b14bb43620f50eb187b, type: 3}
+      propertyPath: launchSpeed
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5217348495484547366, guid: 4186e9b28b6a2b14bb43620f50eb187b, type: 3}
       propertyPath: m_RootOrder
       value: 1

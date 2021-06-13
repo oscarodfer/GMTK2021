@@ -12,6 +12,7 @@ public class Dog : MonoBehaviour
     [SerializeField] float runAceleration;
     [SerializeField] float stopAceleration;
     [SerializeField] float randomizeFreq;
+    [SerializeField] float launchSpeed;
 
     //State can change because of these timers of because events (Like finding a bird). If thats the case, cancel invoke using CancelInvoke("ChangeStatus") from Monobehaviour.
     [Header("Time Ranges")]
@@ -156,7 +157,7 @@ public class Dog : MonoBehaviour
     private void ChangeStatus()
     {
         DogStates newStatus = GiveNewStatus();
-        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:
@@ -191,7 +192,7 @@ public class Dog : MonoBehaviour
     private void ChangeStatus(DogStates newStatus)
     {
        
-        Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
+        //Debug.Log("Dog: " + gameObject.name + " is now " + newStatus + ".");
         switch (newStatus)
         {
             case DogStates.Idle:
@@ -270,5 +271,11 @@ public class Dog : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Hit(Vector2 launchDirection)
+    {
+        ChangeStatus(DogStates.Idle);
+        rb.velocity = launchDirection * launchSpeed;
     }
 }

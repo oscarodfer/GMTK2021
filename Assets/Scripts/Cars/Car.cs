@@ -30,4 +30,16 @@ public class Car : MonoBehaviour
     {
         this.target = target;
     }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Dawg")
+        {
+            col.gameObject.GetComponent<Dog>().Hit((col.transform.position - transform.position).normalized);
+        }
+        else if(col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<PlayerMovement>().Hit((col.transform.position - transform.position).normalized);
+        }
+    }
 }

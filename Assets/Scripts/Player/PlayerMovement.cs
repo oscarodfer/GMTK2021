@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip whistleSound;
     [SerializeField] int maxWhistles = 3;
+    [SerializeField] float launchSpeed;
+    [SerializeField] float launchTime;
 
 
     private const string AXIS_H = "horizontal";
@@ -29,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     GameObject closeByPoop;
     bool pickingUpPoop;
     int whistlesAvailable;
+    float hitAt;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +100,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(rBody.velocity);
+
+        if (Time.time - hitAt < launchTime)
+            return;
+
         if (pickingUpPoop)
             return;
 
@@ -147,5 +155,11 @@ public class PlayerMovement : MonoBehaviour
     public void AddOneWhistle()
     {
         whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + 1);
+    }
+
+    public void Hit(Vector2 launchDirection)
+    {
+        hitAt = Time.time;
+        rBody.velocity = launchDirection * launchSpeed;
     }
 }

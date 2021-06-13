@@ -235,6 +235,9 @@ MonoBehaviour:
   dogFollowTime: 10
   audioSource: {fileID: 509811391}
   whistleSound: {fileID: 8300000, guid: 3307427547df23b438e3a9bf7b3a64c3, type: 3}
+  maxWhistles: 3
+  launchSpeed: 40
+  launchTime: 1
 --- !u!114 &3597354810704561451
 MonoBehaviour:
   m_ObjectHideFlags: 0
