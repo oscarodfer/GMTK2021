@@ -7,7 +7,10 @@ public class TargetBird : Target
     Animator anim;
     SpriteRenderer sRenderer;
     [SerializeField] float speedToFly = 10;
-    
+    [SerializeField] AudioClip flappingSound;
+
+    private AudioSource audioSource;
+
     bool destroying ;
     // Start is called before the first frame update
     protected override void Start()
@@ -15,6 +18,7 @@ public class TargetBird : Target
         base.Start();
         anim= GetComponent<Animator>();
         sRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         destroying = false;
     }
 
@@ -27,6 +31,7 @@ public class TargetBird : Target
             if (destroying == false)
             {
                 destroying = true;
+                audioSource.PlayOneShot(flappingSound);
                 Destroy(gameObject, 10);
             }
             //animation to scape and movement
