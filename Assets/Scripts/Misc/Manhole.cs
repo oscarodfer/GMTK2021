@@ -24,10 +24,10 @@ public class Manhole : MonoBehaviour
             animator.SetTrigger("IsTriggered");
 
             // TODO: Death screen? And definitely falling animation
-            foreach (var rope in FindObjectsOfType<Rope>())
-            {
-                rope.PlayerPoint = transform;
-            }
+            //foreach (var rope in FindObjectsOfType<Rope>())
+            //{
+            //    rope.PlayerPoint = transform;
+            //}
             playerObject.SetActive(false);
             // Destroy(col.gameObject);
             Invoke("ActivatePlayer", timeInTheHole);

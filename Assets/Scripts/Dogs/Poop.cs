@@ -32,7 +32,7 @@ public class Poop : MonoBehaviour
         var percentage = (Time.time - (dieAt - timeToDie)) / timeToDie;
         var frequency = maxVibrationFrequency * percentage;
         var amplitude = maxVibrationAmplitude * percentage;
-        Debug.Log (percentage);
+        //Debug.Log (percentage);
         transform.position = initialPosition + Vector2.right * Mathf.Sin(frequency * Time.fixedDeltaTime) * amplitude;
     }
 }
