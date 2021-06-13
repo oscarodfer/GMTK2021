@@ -86,6 +86,7 @@ MonoBehaviour:
   barkSound: {fileID: 8300000, guid: e0d60264809262446a66ad973cada0b2, type: 3}
   chaseMaxDistance: 8
   timeToStartChase: 2
+  currentState: 0
 --- !u!61 &1338149658873910164
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -99,7 +100,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0037345886, y: 0.19055748}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.2}
@@ -110,7 +111,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.65625, y: 0.61888504}
   m_EdgeRadius: 0
 --- !u!212 &6620131815372684267
 SpriteRenderer:
