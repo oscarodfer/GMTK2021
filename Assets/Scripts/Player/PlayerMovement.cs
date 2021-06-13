@@ -99,9 +99,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        Debug.Log(rBody.velocity);
-
+    { 
         if (Time.time - hitAt < launchTime)
             return;
 

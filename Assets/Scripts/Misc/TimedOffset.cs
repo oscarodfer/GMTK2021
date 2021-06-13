@@ -16,7 +16,7 @@ public class TimedOffset : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPosition = transform.position;
+        startPosition = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -31,6 +31,6 @@ public class TimedOffset : MonoBehaviour
             currentOffset = direction * Mathf.Sin(Time.time * frequency) * offsetAmount;
         }
         
-        transform.position = startPosition + currentOffset;
+        transform.localPosition = startPosition + currentOffset;
     }
 }

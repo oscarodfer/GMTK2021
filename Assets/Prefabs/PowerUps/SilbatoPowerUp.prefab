@@ -63,8 +63,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalWhistles: 2
   collectParticles: {fileID: 7663695705251544381, guid: 27780293a4942a842b5e9bf597a0d72c, type: 3}
-  maxOffsetMovement: 0.5
-  frequency: 0.25
 --- !u!1 &8466640747513640187
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,8 +73,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8466640747513640186}
   - component: {fileID: 8466640747513640181}
+  - component: {fileID: 1774767257}
   m_Layer: 0
-  m_Name: silvato
+  m_Name: silbato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147,3 +146,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1774767257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8466640747513640187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d183b0dfc8e8b94f9bab095bb17b49d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 5
+  offsetAmount: 0.25
+  direction: {x: 0, y: 1, z: 0}
+  clampPositive: 1

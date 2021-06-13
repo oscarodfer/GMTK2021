@@ -31,7 +31,7 @@ public class Dog : MonoBehaviour
     [SerializeField] float timeToStartChase;
     private Rigidbody2D rb;
     private Vector2 direction;
-    private DogStates currentState;
+    public DogStates currentState;
     private float originalMass;
     private float originalLinearDrag;
     private Transform prey;
@@ -39,8 +39,9 @@ public class Dog : MonoBehaviour
     private float lastPooped;
     private float stopChasingAt;
     private Transform player;
+    private ScoreManager scoreManager;
 
-    private enum DogStates
+    public enum DogStates
     {
         Idle = 1,
         Walking = 2,
@@ -58,6 +59,7 @@ public class Dog : MonoBehaviour
         currentState = DogStates.Idle;
         //InvokeRepeating("RandomizeVelocity", randomizeFreq, randomizeFreq);
         Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -277,5 +279,6 @@ public class Dog : MonoBehaviour
     {
         ChangeStatus(DogStates.Idle);
         rb.velocity = launchDirection * launchSpeed;
+        scoreManager.AddRanOver();
     }
 }
