@@ -31,7 +31,7 @@ public class Dog : MonoBehaviour
     [SerializeField] float timeToStartChase;
     private Rigidbody2D rb;
     private Vector2 direction;
-    private DogStates currentState;
+    public DogStates currentState;
     private float originalMass;
     private float originalLinearDrag;
     private Transform prey;
@@ -41,7 +41,7 @@ public class Dog : MonoBehaviour
     private Transform player;
     private ScoreManager scoreManager;
 
-    private enum DogStates
+    public enum DogStates
     {
         Idle = 1,
         Walking = 2,

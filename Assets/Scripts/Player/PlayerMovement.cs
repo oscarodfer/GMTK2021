@@ -99,7 +99,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    { 
         if (Time.time - hitAt < launchTime)
             return;
 
