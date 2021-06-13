@@ -1,9 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class Dog : MonoBehaviour
 {
@@ -23,13 +20,15 @@ public class Dog : MonoBehaviour
     [SerializeField] float idleMinTime, idleMaxTime;
 
 
+
+
     [Header("Other stuff")]
     [SerializeField] GameObject poopPrefab;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip barkSound;
     [SerializeField] float chaseMaxDistance = 8;
     [SerializeField] float timeToStartChase;
-    private Rigidbody2D rb;
+    private Rigidbody2D rbd;
     private Vector2 direction;
     public DogStates currentState;
     private float originalMass;
@@ -38,14 +37,23 @@ public class Dog : MonoBehaviour
     private float timerChase;
     private float lastPooped;
     private float stopChasingAt;
-    private Transform player;
+    private PlayerMovement player;
     private ScoreManager scoreManager;
+    private SpriteRenderer spriteRender;
+
 
     private Animator animator;
 
     private const string IS_POOPING = "isPooping";
     private const string IS_RUNNING = "isRunning";
     private const string IS_BARKING = "isBarking";
+
+
+    [Header("New Fields")]    
+    private float timer;
+    Vector3 targetDirection;
+    Vector3 targetPosition;
+
 
     public enum DogStates
     {
@@ -58,45 +66,147 @@ public class Dog : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>().transform;
-        rb = GetComponent<Rigidbody2D>();
-        originalMass = rb.mass;
-        originalLinearDrag = rb.drag;
-        currentState = DogStates.Idle;
+        player = GameObject.FindObjectOfType<PlayerMovement>();
+        rbd = GetComponent<Rigidbody2D>();
+        
+        //originalMass = rbd.mass;
+        //originalLinearDrag = rbd.drag;        
         //InvokeRepeating("RandomizeVelocity", randomizeFreq, randomizeFreq);
-        Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
+        //Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
+
         scoreManager = FindObjectOfType<ScoreManager>();
+
         animator = GetComponent<Animator>();
+        spriteRender = GetComponent<SpriteRenderer>();
+
+        currentState = DogStates.Walking;
+        targetDirection = Vector3.up * Random.value + Vector3.left * Random.value;
+        StartCoroutine(Walk());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    void FixedUpdate()
-    {
-        switch (currentState)
+        if (targetDirection.x < 0)
         {
-            case DogStates.Idle:
-                //Do Nothing. Allow to be pushed
-                break;
-            case DogStates.Walking:
-                Walk();
-                animator.SetBool(IS_RUNNING, true);
-                break;
-            case DogStates.Running:
-                Chase(prey);
-                animator.SetBool(IS_BARKING, true);
-                break;
-            case DogStates.Pooping:
-                animator.SetBool(IS_POOPING, true);
-                break;
-
+            spriteRender.flipX = true;   
+        }else
+        {
+            spriteRender.flipX = false;
         }
 
+
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(targetPosition, 0.25f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(transform.position, transform.position + targetDirection);
+    }
+
+    Vector3 GetNewTarget()
+    {
+
+        targetPosition = player.transform.position + Vector3.up * Random.Range(-1, 1) + Vector3.left * Random.Range(-1, 1);
+        Collider2D testCollision = Physics2D.OverlapCircle(targetPosition, 0.01f);
+        int count = 5;
+        while (testCollision && (testCollision.name == "Background" || testCollision.name == "Foreground") && count > 0)
+        {
+            Debug.Log(testCollision.name);
+            targetPosition = player.transform.position + Vector3.up * Random.Range(-1, 1) + Vector3.left * Random.Range(-1, 1);
+            testCollision = Physics2D.OverlapCircle(targetPosition, 0.01f);
+            count--;
+        }
+        
+        return targetDirection = (targetPosition - (Vector3)rbd.position).normalized;
+    }
+
+    public void SelectNextState()
+    {
+        int nextState = Random.Range(1, 6);
+        // to make 20% more likely to select walking.
+        if (nextState > 5)
+        {
+            currentState = (DogStates)nextState - 5;
+        }else
+        {
+            currentState = (DogStates)2;
+        }        
+        switch(currentState)
+        {
+            case DogStates.Walking:
+                StartCoroutine(Walk());
+                break;
+            case DogStates.Pooping:
+                StartCoroutine(Poop());
+                break;
+            case DogStates.Idle:
+                StartCoroutine(Iddle());
+                break;
+            case DogStates.Running:
+                StartCoroutine(Run());
+                break;            
+        }
+    }
+
+    
+
+
+    IEnumerator Walk()
+    {
+        animator.SetBool("isRunning", true);
+        GetNewTarget();        
+        if (Random.Range(1, 5) < 2)
+        {
+            audioSource.PlayOneShot(barkSound);
+        }
+        timer = Random.Range(walkMinTime, walkMaxTime);
+        while (currentState == DogStates.Walking && timer > 0)
+        {
+            
+            if ((targetPosition - (Vector3)rbd.position).magnitude > walkSpeed * Time.deltaTime)
+            {
+                targetDirection = (targetPosition - (Vector3)rbd.position).normalized;
+                rbd.MovePosition(rbd.position + (Vector2)targetDirection * walkSpeed * Time.deltaTime);             
+            }else
+            {
+                GetNewTarget();
+            }
+            timer -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+        SelectNextState();
+    }
+
+    IEnumerator Iddle()
+    {
+        animator.SetBool("isRunning", false);
+        Debug.Log("Iddle");
+        yield return new WaitForSeconds(Random.Range(idleMinTime, idleMaxTime));
+        SelectNextState();
+    }
+
+    IEnumerator Run()
+    {
+        animator.SetBool("isRunning", true);
+        Debug.Log("Run");
+        yield return new WaitForSeconds(Random.Range(idleMinTime, idleMaxTime));
+        SelectNextState();
+    }
+
+    IEnumerator Poop()
+    {
+        animator.SetBool("isRunning", false);
+        Debug.Log("Poop");
+        Instantiate(poopPrefab, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(Random.Range(poopMinTime, poopMaxTime));
+        SelectNextState();
+    }
+
+    /**
     private void Walk()
     {
         rb.AddForce(LimitMaxSpeedWalk(direction*runAceleration),ForceMode2D.Force);
@@ -284,10 +394,19 @@ public class Dog : MonoBehaviour
         return false;
     }
 
+    
+    */
+
     public void Hit(Vector2 launchDirection)
     {
-        ChangeStatus(DogStates.Idle);
-        rb.velocity = launchDirection * launchSpeed;
+        audioSource.PlayOneShot(barkSound);
+        //ChangeStatus(DogStates.Idle);
+        rbd.velocity = launchDirection * launchSpeed;
         scoreManager.AddRanOver();
+    }
+
+    public bool StartChase(Transform prey, bool overrideable = false, float stopChasingAfter = float.MaxValue)
+    {
+        return false;
     }
 }
