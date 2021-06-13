@@ -95,6 +95,11 @@ public class PlayerMovement : MonoBehaviour
             lastDirection.y = -1;
         }
 
+        if (forceToMove != Vector2.zero && rBody.velocity != Vector2.zero && !audioSource.isPlaying)
+            audioSource.Play();
+        else if (forceToMove == Vector2.zero || rBody.velocity == Vector2.zero)
+            audioSource.Stop();
+
         animator.SetFloat(AXIS_H, rBody.velocity.x);
         animator.SetFloat(AXIS_V, rBody.velocity.y);
         animator.SetBool(IS_RUNNING, forceToMove != Vector2.zero);
