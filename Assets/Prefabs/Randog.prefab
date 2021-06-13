@@ -73,9 +73,9 @@ MonoBehaviour:
   runAceleration: 200
   stopAceleration: 3000
   randomizeFreq: 5
-  poopMinTime: 5
-  poopMaxTime: 20
-  minTimeBetweenPoops: 10
+  poopMinTime: 1
+  poopMaxTime: 3
+  minTimeBetweenPoops: 30
   walkMinTime: 1
   walkMaxTime: 5
   idleMinTime: 1

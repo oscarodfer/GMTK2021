@@ -34,6 +34,14 @@ public class PlayerMovement : MonoBehaviour
         lastDirection = Vector2.zero;
     }
 
+    void CallForDogs()
+    {
+        var dogs = FindObjectsOfType<Dog>();
+        foreach (var dog in dogs)
+        {
+            dog.StartChase(transform, true, dogFollowTime);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -47,11 +55,7 @@ public class PlayerMovement : MonoBehaviour
         if (Controls.ActionDown)
         {
             audioSource.PlayOneShot(whistleSound);
-            var dogs = FindObjectsOfType<Dog>();
-            foreach(var dog in dogs)
-            {
-                dog.StartChase(transform, true, dogFollowTime);
-            }
+            Invoke("CallForDogs",whistleSound.length);
         }
 
         forceToMove = new Vector2(Controls.Horizontal,Controls.Vertical);
