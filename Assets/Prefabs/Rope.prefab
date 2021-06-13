@@ -47,7 +47,7 @@ MonoBehaviour:
   PlayerPoint: {fileID: 0}
   DogoPoint: {fileID: 0}
   ropeSegLen: 0.125
-  segmentLength: 40
+  segmentLength: 25
   lineWidth: 0.05
   elasticForce: 4
 --- !u!120 &1367215227305792096
