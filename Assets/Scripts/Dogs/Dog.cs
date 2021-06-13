@@ -84,9 +84,11 @@ public class Dog : MonoBehaviour
                 break;
             case DogStates.Walking:
                 Walk();
+                animator.SetBool(IS_RUNNING, true);
                 break;
             case DogStates.Running:
                 Chase(prey);
+                animator.SetBool(IS_BARKING, true);
                 break;
             case DogStates.Pooping:
                 animator.SetBool(IS_POOPING, true);
