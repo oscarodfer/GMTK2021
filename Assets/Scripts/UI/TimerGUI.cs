@@ -8,12 +8,17 @@ public class TimerGUI : MonoBehaviour
 {
     private float timer;
     [SerializeField]TextMeshProUGUI textTimer;
+    [SerializeField] int beepBelowSeconds = 20;
+    [SerializeField] AudioClip beepSound;
 
+    AudioSource audioSource;
     ScoreManager scoreManager;
     bool timeRanOut;
+    int lastSecond;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         timeRanOut = false;
     }
 
@@ -28,6 +33,13 @@ public class TimerGUI : MonoBehaviour
         timer -= Time.deltaTime;
         timer = Mathf.Clamp(timer,0, int.MaxValue);
         textTimer.text = ConvertTimerFormat();
+
+        if(timer <= beepBelowSeconds)
+        {
+            var currSecond = Mathf.FloorToInt(timer);
+            if (currSecond != lastSecond) audioSource.PlayOneShot(beepSound);
+            lastSecond = currSecond;
+        }
     }
 
     public void AddSeconds(int amount)
