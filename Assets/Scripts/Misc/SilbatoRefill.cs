@@ -9,19 +9,6 @@ public class SilbatoRefill : MonoBehaviour
     public int totalWhistles;
     public GameObject collectParticles;
 
-    [Header("Visuals")]
-    public float maxOffsetMovement;
-    public float frequency;
-
-
-    private float offset;
-
-    // Update is called once per frame
-    void Update()
-    {
-        offset = Mathf.Sin(Time.time * frequency) * maxOffsetMovement;
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
