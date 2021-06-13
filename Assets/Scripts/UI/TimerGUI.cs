@@ -9,8 +9,22 @@ public class TimerGUI : MonoBehaviour
     private float timer;
     [SerializeField]TextMeshProUGUI textTimer;
 
+    ScoreManager scoreManager;
+    bool timeRanOut;
+
+    private void Start()
+    {
+        timeRanOut = false;
+    }
+
     private void Update()
     {
+        if (timer <= 0 && !timeRanOut)
+        {
+            scoreManager.TimeRanOut();
+            timeRanOut = true;
+        }
+        
         timer -= Time.deltaTime;
         timer = Mathf.Clamp(timer,0, int.MaxValue);
         textTimer.text = ConvertTimerFormat();
@@ -19,6 +33,8 @@ public class TimerGUI : MonoBehaviour
     public void AddSeconds(int amount)
     {
         timer += (float)amount;
+        if(scoreManager == null) scoreManager = FindObjectOfType<ScoreManager>();
+        scoreManager.AddSecondsPlayed(amount);
     }
 
     private string ConvertTimerFormat()

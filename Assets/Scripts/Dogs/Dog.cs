@@ -39,6 +39,7 @@ public class Dog : MonoBehaviour
     private float lastPooped;
     private float stopChasingAt;
     private Transform player;
+    private ScoreManager scoreManager;
 
     private enum DogStates
     {
@@ -58,6 +59,7 @@ public class Dog : MonoBehaviour
         currentState = DogStates.Idle;
         //InvokeRepeating("RandomizeVelocity", randomizeFreq, randomizeFreq);
         Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -277,5 +279,6 @@ public class Dog : MonoBehaviour
     {
         ChangeStatus(DogStates.Idle);
         rb.velocity = launchDirection * launchSpeed;
+        scoreManager.AddRanOver();
     }
 }

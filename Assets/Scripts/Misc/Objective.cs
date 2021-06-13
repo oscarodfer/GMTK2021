@@ -27,6 +27,7 @@ public class Objective : MonoBehaviour
     private float Theta = 0f;
     private bool activated;
     Animator anim;
+    ScoreManager scoreManager;
 
     public int SecondsExtra { get => secondsExtra;  }
 
@@ -39,6 +40,7 @@ public class Objective : MonoBehaviour
         anim = GetComponent<Animator>();
         aSource = GetComponent<AudioSource>();
         LineDrawer.materials[0] = new Material(material);
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     void Update()
@@ -80,6 +82,7 @@ public class Objective : MonoBehaviour
         aSource.PlayOneShot(achievedSound);
         anim.SetTrigger("Activated");
         objectiveReachedEvent?.Invoke(this);
+        scoreManager.AddCheckpointReached();
     }
 
     private void DisableMe()

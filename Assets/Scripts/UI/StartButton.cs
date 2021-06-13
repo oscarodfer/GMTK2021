@@ -11,7 +11,10 @@ public class StartButton : MonoBehaviour
 
     public void LoadScene(string name)
     {
+        Debug.Log("Load scene before: " + Time.timeScale);
+        Time.timeScale = 1;
         SceneManager.LoadSceneAsync(name, LoadSceneMode.Single);
+        Debug.Log("Load scene after: " + Time.timeScale);
     }
 
 
