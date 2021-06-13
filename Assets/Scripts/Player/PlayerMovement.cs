@@ -152,9 +152,9 @@ public class PlayerMovement : MonoBehaviour
         animator.Play("Player_idle");
     }
 
-    public void AddOneWhistle()
+    public void AddOneWhistle( int amount = 0)
     {
-        whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + 1);
+        whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + amount);        
     }
 
     public void Hit(Vector2 launchDirection)
