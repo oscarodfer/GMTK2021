@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fef1204979b809144941bba197cd72ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalWhistles: 2
+  totalWhistles: 3
   collectParticles: {fileID: 7663695705251544381, guid: 27780293a4942a842b5e9bf597a0d72c, type: 3}
 --- !u!1 &8466640747513640187
 GameObject:
