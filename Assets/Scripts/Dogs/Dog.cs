@@ -88,19 +88,22 @@ public class Dog : MonoBehaviour
                 break;
             case DogStates.Running:
                 Chase(prey);
-                animator.SetBool(IS_BARKING, true);
+                animator.SetBool(IS_RUNNING, true);
                 break;
             case DogStates.Pooping:
                 animator.SetBool(IS_POOPING, true);
                 break;
 
         }
-
+        if (rb.velocity.magnitude > 0)
+        {
+            animator.SetFloat("horizontal", rb.velocity.x);
+            animator.SetFloat("vertical", rb.velocity.y);            
+        }
     }
     private void Walk()
     {
-        animator.SetFloat("horizontal", direction.x);
-        animator.SetFloat("vertical", direction.y);
+        
         rb.AddForce(LimitMaxSpeedWalk(direction*runAceleration),ForceMode2D.Force);
     }
 
