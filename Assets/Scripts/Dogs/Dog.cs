@@ -80,18 +80,23 @@ public class Dog : MonoBehaviour
         switch (currentState)
         {
             case DogStates.Idle:
-                //Do Nothing. Allow to be pushed
+                //Do Nothing. Allow to be pushed                
+                animator.SetBool(IS_RUNNING, false);
+                animator.SetBool(IS_POOPING, false);
                 break;
             case DogStates.Walking:
                 Walk();
                 animator.SetBool(IS_RUNNING, true);
+                animator.SetBool(IS_POOPING, false);
                 break;
             case DogStates.Running:
                 Chase(prey);
                 animator.SetBool(IS_RUNNING, true);
+                animator.SetBool(IS_POOPING, false);
                 break;
             case DogStates.Pooping:
                 animator.SetBool(IS_POOPING, true);
+                animator.SetBool(IS_RUNNING, false);
                 break;
 
         }
@@ -222,7 +227,7 @@ public class Dog : MonoBehaviour
                 RandomizeVelocity();
                 Invoke("ChangeStatus", UnityEngine.Random.Range(walkMinTime, walkMaxTime));
                 break;
-            case DogStates.Running:
+            case DogStates.Running:                
                 currentState = newStatus;
                 rb.mass = originalMass;
                 //Call invoke when the target to chase is gone
