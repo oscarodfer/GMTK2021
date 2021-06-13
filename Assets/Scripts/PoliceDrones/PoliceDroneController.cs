@@ -155,6 +155,7 @@ public class PoliceDroneController : MonoBehaviour
             if (timer < 0)
             {
                 currentStatus = Status.ATTACKING;
+                StartCoroutine(Attacking());
             }
             yield return new WaitForEndOfFrame();
         }
@@ -164,6 +165,7 @@ public class PoliceDroneController : MonoBehaviour
     {
         Debug.Log(">>>>>>>>>> Attack performed!!!!!");        
         currentStatus = Status.WANDERING;
+        StartCoroutine(Wander());
         yield return new WaitForEndOfFrame();
     }
 
