@@ -5,6 +5,9 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     [SerializeField] float speed = 5;
+    [SerializeField] AudioClip bumpSound;
+
+    AudioSource audioSource;
 
     private Transform target;
     BoxCollider2D boxColl;
@@ -13,6 +16,7 @@ public class Car : MonoBehaviour
     private void Start()
     {
         boxColl = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
     }
     private void Update()
     {
@@ -41,10 +45,12 @@ public class Car : MonoBehaviour
     {
         if(col.gameObject.tag == "Dawg")
         {
+            audioSource.PlayOneShot(bumpSound);
             col.gameObject.GetComponent<Dog>().Hit((col.transform.position - transform.position).normalized);
         }
         else if(col.gameObject.tag == "Player")
         {
+            audioSource.PlayOneShot(bumpSound);
             col.gameObject.GetComponent<PlayerMovement>().Hit((col.transform.position - transform.position).normalized);
         }
     }
