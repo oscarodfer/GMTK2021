@@ -6,7 +6,7 @@ public class Car : MonoBehaviour
 {
     [SerializeField] float speed = 5;
     [SerializeField] AudioClip bumpSound;
-
+    [SerializeField] AudioClip[] honkSounds;
     AudioSource audioSource;
 
     private Transform target;
@@ -60,11 +60,13 @@ public class Car : MonoBehaviour
         {
             audioSource.PlayOneShot(bumpSound);
             col.gameObject.GetComponent<Dog>().Hit((col.transform.position - transform.position).normalized);
+            audioSource.PlayOneShot(honkSounds[Random.Range(0,honkSounds.Length)]);
         }
         else if(col.gameObject.tag == "Player")
         {
             audioSource.PlayOneShot(bumpSound);
             col.gameObject.GetComponent<PlayerMovement>().Hit((col.transform.position - transform.position).normalized);
+            audioSource.PlayOneShot(honkSounds[Random.Range(0, honkSounds.Length)]);
         }
     }
 }
