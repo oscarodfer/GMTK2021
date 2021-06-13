@@ -88,15 +88,8 @@ public class Dog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targetDirection.x < 0)
-        {
-            spriteRender.flipX = true;   
-        }else
-        {
-            spriteRender.flipX = false;
-        }
-
-
+        animator.SetFloat("horizontal", targetDirection.x);
+        animator.SetFloat("vertical", targetDirection.y);
     }
 
     private void OnDrawGizmos()
@@ -162,6 +155,7 @@ public class Dog : MonoBehaviour
         if (Random.Range(1, 5) < 2)
         {
             audioSource.PlayOneShot(barkSound);
+            //animator.SetBool("barking", true);
         }
         timer = Random.Range(walkMinTime, walkMaxTime);
         while (currentState == DogStates.Walking && timer > 0)
@@ -199,7 +193,7 @@ public class Dog : MonoBehaviour
 
     IEnumerator Poop()
     {
-        animator.SetBool("isRunning", false);
+        animator.SetBool("isPooping", true);        
         Debug.Log("Poop");
         Instantiate(poopPrefab, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(Random.Range(poopMinTime, poopMaxTime));
