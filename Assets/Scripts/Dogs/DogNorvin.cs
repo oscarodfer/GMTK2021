@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dog : MonoBehaviour
+public class DogNorvin : MonoBehaviour
 {
     [SerializeField] float walkSpeed;
     [SerializeField] float runSpeed;
