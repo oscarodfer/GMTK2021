@@ -35,6 +35,10 @@ public class TimerGUI : MonoBehaviour
         else minsText = mins.ToString();
         if (seconds < 10) secsText = "0" + seconds;
         else secsText = seconds.ToString();
+
+        if (timer <= 0)
+            return "00:00";
+
         return minsText + ":" + secsText;
     }
 

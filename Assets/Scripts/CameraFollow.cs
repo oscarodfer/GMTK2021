@@ -14,7 +14,7 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField] float offsetAmount;
     [SerializeField] float smoothTimerOffset;
-
+    [SerializeField] Transform limitUp, limitDown, limitLeft, limitRight;
 
 
     Vector3 originalPos;
@@ -47,7 +47,9 @@ public class CameraFollow : MonoBehaviour
         
 
         Vector3 goalPos = objectToFollow.transform.position;
-        goalPos = new Vector3(goalPos.x , goalPos.y , goalPos.z);
+        float posX = Mathf.Clamp(goalPos.x, limitLeft.position.x + myCamera.orthographicSize * myCamera.aspect, limitRight.position.x - myCamera.orthographicSize * myCamera.aspect);
+        float posY = Mathf.Clamp(goalPos.y, limitDown.position.y + myCamera.orthographicSize, limitUp.position.y - myCamera.orthographicSize);
+        goalPos = new Vector3( posX,posY , goalPos.z);
         //goalPos.y = transform.position.y;
         goalPos.z = -10;
 
