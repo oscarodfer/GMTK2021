@@ -96,19 +96,30 @@ public class PoliceDroneController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Encuentra la shit mas cercana.
+    /// </summary>
     void CheckForNearbyShit()
     {
-        poop = GameObject.FindObjectOfType<Poop>();
+        poop = null;
+        foreach (Poop p in GameObject.FindObjectsOfType<Poop>())
+        {
+            if (poop == null)
+            {
+                poop = p;
+            }else
+            {
+                if (Vector3.Distance(transform.position, p.transform.position) < Vector3.Distance(transform.position, poop.transform.position))
+                {
+                    poop = p;
+                }
+            }
+        }        
+
         if (poop != null)
         {
-            if (Vector3.Distance(transform.position, poop.transform.position) <= maxDistanceFromOringin)
-            {
-                currentStatus = Status.GOING_TO_SHIT;
-            }
-            else
-            {
-                poop = null;
-            }
+            currentStatus = Status.GOING_TO_SHIT;
+            StartCoroutine(GoingToShit());
         }
     }
 
@@ -122,9 +133,9 @@ public class PoliceDroneController : MonoBehaviour
             }
             timer -= Time.deltaTime;
             if (timer < 0)
-            {
-                CheckForNearbyShit();
+            {                
                 timer = 0.1f;
+                CheckForNearbyShit();
             }
             yield return new WaitForEndOfFrame();
         }
