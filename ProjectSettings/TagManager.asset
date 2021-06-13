@@ -7,8 +7,6 @@ TagManager:
   - Environment
   - Poop
   - Dawg
-
-  - PowerUps
   layers:
   - Default
   - TransparentFX
@@ -20,7 +18,7 @@ TagManager:
   - Player
   - 
   - 
-  - PowerUps
+  - 
   - 
   - 
   - 
