@@ -7,6 +7,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public delegate void WhistlesUpdatedDelegate(int currentAmount);
+    public WhistlesUpdatedDelegate whistlesUpdatedEvent;
+
     [SerializeField] float maxSpeed;
     [SerializeField] float forceMultiplier =100000;
     [SerializeField] float dogFollowTime;
@@ -40,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         lastDirection = Vector2.zero;
         whistlesAvailable = maxWhistles;
+        whistlesUpdatedEvent?.Invoke(whistlesAvailable);
 
     }
 
@@ -66,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
             audioSource.PlayOneShot(whistleSound);
             Invoke("CallForDogs",whistleSound.length);
             whistlesAvailable--;
+            whistlesUpdatedEvent?.Invoke(whistlesAvailable);
         }
 
 
@@ -150,9 +155,10 @@ public class PlayerMovement : MonoBehaviour
         animator.Play("Player_idle");
     }
 
-    public void AddOneWhistle( int amount = 0)
+    public void AddWhistles( int amount = 0)
     {
-        whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + amount);        
+        whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + amount);
+        whistlesUpdatedEvent?.Invoke(whistlesAvailable);
     }
 
     public void Hit(Vector2 launchDirection)

@@ -41,6 +41,12 @@ public class Dog : MonoBehaviour
     private Transform player;
     private ScoreManager scoreManager;
 
+    private Animator animator;
+
+    private const string IS_POOPING = "isPooping";
+    private const string IS_RUNNING = "isRunning";
+    private const string IS_BARKING = "isBarking";
+
     public enum DogStates
     {
         Idle = 1,
@@ -60,6 +66,7 @@ public class Dog : MonoBehaviour
         //InvokeRepeating("RandomizeVelocity", randomizeFreq, randomizeFreq);
         Invoke("ChangeStatus", UnityEngine.Random.Range(idleMinTime, idleMaxTime));
         scoreManager = FindObjectOfType<ScoreManager>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -77,12 +84,14 @@ public class Dog : MonoBehaviour
                 break;
             case DogStates.Walking:
                 Walk();
+                animator.SetBool(IS_RUNNING, true);
                 break;
             case DogStates.Running:
                 Chase(prey);
+                animator.SetBool(IS_BARKING, true);
                 break;
             case DogStates.Pooping:
-                //Do nothing! Just poop.
+                animator.SetBool(IS_POOPING, true);
                 break;
 
         }

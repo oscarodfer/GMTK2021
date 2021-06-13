@@ -49,7 +49,7 @@ public class ObjectiveManager : MonoBehaviour
     {
 
         if(show) GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerNotifications>().ShowText("+" + seconds,3);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().AddOneWhistle();
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().AddWhistles();
         timer.AddSeconds(seconds);
     }
 }
