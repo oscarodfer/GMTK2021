@@ -15,7 +15,7 @@ public class SilbatoRefill : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerMovement>().AddWhistles(totalWhistles);
             var part = GameObject.Instantiate(collectParticles, transform.position, transform.rotation) as GameObject;
-            GameObject.Destroy(part, 0.25f);
+            GameObject.Destroy(part, 1f);
             GameObject.Destroy(this.gameObject);
         }
     }

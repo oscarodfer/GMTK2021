@@ -235,6 +235,7 @@ MonoBehaviour:
   dogFollowTime: 10
   audioSource: {fileID: 509811391}
   whistleSound: {fileID: 8300000, guid: 3307427547df23b438e3a9bf7b3a64c3, type: 3}
+  walkingSound: {fileID: 8300000, guid: 33d6cfe538d516445af71318f8899e0c, type: 3}
   maxWhistles: 3
   launchSpeed: 40
   launchTime: 1
@@ -327,11 +328,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 33d6cfe538d516445af71318f8899e0c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.206
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
