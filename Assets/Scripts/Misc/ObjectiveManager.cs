@@ -47,7 +47,9 @@ public class ObjectiveManager : MonoBehaviour
 
     private void AddSecondsToGeneralTimer(int seconds, bool  show = true)
     {
+
         if(show) GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerNotifications>().ShowText("+" + seconds,3);
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>().AddOneWhistle();
         timer.AddSeconds(seconds);
     }
 }

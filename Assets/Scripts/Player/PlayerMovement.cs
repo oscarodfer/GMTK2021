@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dogFollowTime;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip whistleSound;
+    [SerializeField] int maxWhistles = 3;
+
 
     private const string AXIS_H = "horizontal";
     private const string AXIS_V = "vertical";
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 lastDirection;
     GameObject closeByPoop;
     bool pickingUpPoop;
+    int whistlesAvailable;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         rBody= GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         lastDirection = Vector2.zero;
+        whistlesAvailable = maxWhistles;
     }
 
     void CallForDogs()
@@ -52,10 +56,11 @@ public class PlayerMovement : MonoBehaviour
             rBody.velocity = new Vector2();
         }
 
-        if (Controls.ActionDown)
+        if (Controls.ActionDown && whistlesAvailable >0)
         {
             audioSource.PlayOneShot(whistleSound);
             Invoke("CallForDogs",whistleSound.length);
+            whistlesAvailable--;
         }
 
         forceToMove = new Vector2(Controls.Horizontal,Controls.Vertical);
@@ -133,5 +138,10 @@ public class PlayerMovement : MonoBehaviour
         closeByPoop = null;
         pickingUpPoop = false;
         animator.Play("Player_idle");
+    }
+
+    public void AddOneWhistle()
+    {
+        whistlesAvailable = Mathf.Clamp(0, maxWhistles, whistlesAvailable + 1);
     }
 }
