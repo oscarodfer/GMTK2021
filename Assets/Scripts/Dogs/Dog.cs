@@ -99,6 +99,8 @@ public class Dog : MonoBehaviour
     }
     private void Walk()
     {
+        animator.SetFloat("horizontal", direction.x);
+        animator.SetFloat("vertical", direction.y);
         rb.AddForce(LimitMaxSpeedWalk(direction*runAceleration),ForceMode2D.Force);
     }
 
@@ -135,7 +137,7 @@ public class Dog : MonoBehaviour
         {
             y = 0;
         }
-
+        
         return new Vector2(x, y);
     }
 
