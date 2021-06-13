@@ -118,6 +118,7 @@ public class Dog : MonoBehaviour
 
     public void SelectNextState()
     {
+        Debug.Log("Selecting next state");
         int nextState = Random.Range(1, 4);
         // to make 20% more likely to select walking.                
         switch(currentState)
@@ -196,10 +197,10 @@ public class Dog : MonoBehaviour
         timer = Random.Range(1, 3);
         while (currentState == DogStates.Running && timer > 0)
         {
-            if ((targetPosition - (Vector3)rbd.position).magnitude > walkSpeed * Time.fixedDeltaTime)
+            if ((targetPosition - (Vector3)rbd.position).magnitude > runSpeed * Time.fixedDeltaTime)
             {
                 targetDirection = (targetPosition - (Vector3)rbd.position).normalized;
-                rbd.MovePosition(rbd.position + (Vector2)targetDirection * walkSpeed * Time.fixedDeltaTime);
+                rbd.MovePosition(rbd.position + (Vector2)targetDirection * runSpeed * Time.fixedDeltaTime);
             }else
             {
                 targetPosition = prey.position + Vector3.up * Random.Range(-range, range) + Vector3.left * Random.Range(-range, range);
@@ -417,17 +418,18 @@ public class Dog : MonoBehaviour
 
     public void Hit(Vector2 launchDirection)
     {
-        audioSource.PlayOneShot(barkSound);
-        //ChangeStatus(DogStates.Idle);
-        rbd.AddForce(launchDirection * launchSpeed);
+        currentState = DogStates.Idle;
+        StartCoroutine(Iddle());
+        audioSource.PlayOneShot(barkSound);        
+        rbd.AddForce(launchDirection * launchSpeed * 10);
         scoreManager.AddRanOver();
     }
 
     public bool StartChase(Transform prey, bool overrideable = false, float stopChasingAfter = float.MaxValue)
     {
-        //float range = 0.25f;        
-        //currentState = DogStates.Running;
-        //StartCoroutine(Chase(prey));
+        float range = 0.25f;        
+        currentState = DogStates.Running;
+        StartCoroutine(Chase(prey));
         return false;
     }
 }
