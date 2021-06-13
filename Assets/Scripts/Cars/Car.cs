@@ -9,10 +9,15 @@ public class Car : MonoBehaviour
     private Transform target;
     BoxCollider2D boxColl;
     Car carCollision;
+    private float maxTimeStopped = 5;
+    private float timerStopped;
+    bool dontCareAnymore;
     // Start is called before the first frame update
     private void Start()
     {
         boxColl = GetComponent<BoxCollider2D>();
+        timerStopped = 0;
+        dontCareAnymore = false;
     }
     private void Update()
     {
@@ -28,8 +33,16 @@ public class Car : MonoBehaviour
 
         RaycastHit2D hit= Physics2D.Raycast((transform.position + (wantedDir * (boxColl.size.y/2)*1.05f))  , wantedDir, 1);
 
-        if (!(hit.collider != null && hit.collider.gameObject.TryGetComponent<Car>(out carCollision)))
+        if ((!(hit.collider != null && hit.collider.gameObject.TryGetComponent<Car>(out carCollision)))|| dontCareAnymore)
+        {
             transform.Translate(wantedDir * Time.fixedDeltaTime * speed, Space.World);
+            timerStopped = 0;
+        }
+        else
+            timerStopped += Time.fixedDeltaTime;
+
+        if (timerStopped >= maxTimeStopped)
+            dontCareAnymore = true;
     }
 
     public void SetTarget(Transform target)
