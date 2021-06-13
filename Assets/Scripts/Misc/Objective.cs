@@ -15,6 +15,9 @@ public class Objective : MonoBehaviour
     [SerializeField] float transparency = 1;
     [SerializeField] Material material;
     [SerializeField] AudioClip achievedSound;
+
+    [SerializeField] int secondsExtra;
+
     AudioSource aSource;
     public float ThetaScale = 0.01f;
     public float radius = 1f;
@@ -24,6 +27,9 @@ public class Objective : MonoBehaviour
     private float Theta = 0f;
     private bool activated;
     Animator anim;
+
+    public int SecondsExtra { get => secondsExtra;  }
+
     void Start()
     {
         
