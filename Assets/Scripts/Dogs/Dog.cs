@@ -119,8 +119,7 @@ public class Dog : MonoBehaviour
     public void SelectNextState()
     {
         Debug.Log("Selecting next state");
-        int nextState = Random.Range(1, 4);
-        // to make 20% more likely to select walking.                
+        int nextState = Random.Range(1, 4);        
         switch(currentState)
         {
             case DogStates.Walking:
@@ -157,7 +156,7 @@ public class Dog : MonoBehaviour
             {
                 GetNewTarget();
             }
-            timer -= Time.deltaTime;
+            timer -= Time.fixedDeltaTime;
 
             if (Random.Range(1, 100) < 35)
             {
@@ -172,14 +171,16 @@ public class Dog : MonoBehaviour
 
     IEnumerator Iddle()
     {
+        
         Debug.Log("Iddle");
         animator.SetBool("isRunning", false);
         timer = Random.Range(idleMinTime, idleMaxTime);
         while (timer > 0 && currentState == DogStates.Idle)
         {
-            timer -= Time.deltaTime;
+            timer -= Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
-        }        
+        }
+        
         SelectNextState();
     }
 
@@ -205,7 +206,7 @@ public class Dog : MonoBehaviour
             {
                 targetPosition = prey.position + Vector3.up * Random.Range(-range, range) + Vector3.left * Random.Range(-range, range);
             }
-            timer -= Time.deltaTime;
+            timer -= Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
         }
         SelectNextState();
@@ -214,14 +215,16 @@ public class Dog : MonoBehaviour
     IEnumerator Poop()
     {
         Debug.Log("Poop");
+        animator.SetBool("isRunning", false);
         animator.SetBool("isPooping", true);                
         timer = Random.Range(poopMinTime, poopMaxTime);
         Instantiate(poopPrefab, transform.position, Quaternion.identity);
         while (timer > 0 && currentState == DogStates.Pooping)
         {
-            timer -= Time.deltaTime;
+            timer -= Time.fixedDeltaTime;
             yield return new WaitForEndOfFrame();
-        }                    
+        }
+        animator.SetBool("isPooping", false);
         SelectNextState();
     }
 
@@ -420,7 +423,8 @@ public class Dog : MonoBehaviour
     {
         currentState = DogStates.Idle;
         StartCoroutine(Iddle());
-        audioSource.PlayOneShot(barkSound);        
+        audioSource.PlayOneShot(barkSound);
+        Debug.Log(launchDirection + " ---- " + launchSpeed);
         rbd.AddForce(launchDirection * launchSpeed * 10);
         scoreManager.AddRanOver();
     }
@@ -430,6 +434,6 @@ public class Dog : MonoBehaviour
         float range = 0.25f;        
         currentState = DogStates.Running;
         StartCoroutine(Chase(prey));
-        return false;
+        return true;
     }
 }
