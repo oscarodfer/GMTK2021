@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityEditor.AnimatedValues;
 using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         lastDirection = Vector2.zero;
         whistlesAvailable = maxWhistles;
+
     }
 
     void CallForDogs()
@@ -62,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
             Invoke("CallForDogs",whistleSound.length);
             whistlesAvailable--;
         }
+
+
 
         forceToMove = new Vector2(Controls.Horizontal,Controls.Vertical);
 

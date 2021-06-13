@@ -9,15 +9,10 @@ public class TimerGUI : MonoBehaviour
     private float timer;
     [SerializeField]TextMeshProUGUI textTimer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     private void Update()
     {
         timer -= Time.deltaTime;
+        timer = Mathf.Clamp(timer,0, int.MaxValue);
         textTimer.text = ConvertTimerFormat();
     }
 
@@ -35,9 +30,6 @@ public class TimerGUI : MonoBehaviour
         else minsText = mins.ToString();
         if (seconds < 10) secsText = "0" + seconds;
         else secsText = seconds.ToString();
-
-        if (timer <= 0)
-            return "00:00";
 
         return minsText + ":" + secsText;
     }
