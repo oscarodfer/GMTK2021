@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Dog;
 
 public class DogNorvin : MonoBehaviour
 {
@@ -54,14 +55,6 @@ public class DogNorvin : MonoBehaviour
     Vector3 targetDirection;
     Vector3 targetPosition;
 
-
-    public enum DogStates
-    {
-        Idle = 1,
-        Walking = 2,
-        Pooping = 3,
-        Running = 4        
-    }
 
     // Start is called before the first frame update
     void Start()
