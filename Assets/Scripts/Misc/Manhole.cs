@@ -5,14 +5,16 @@ using UnityEngine;
 public class Manhole : MonoBehaviour
 {
     [SerializeField] float timeInTheHole = 3;
-
+    [SerializeField] AudioClip hurtSound;
     Animator animator;
+    AudioSource aSource;
     GameObject playerObject;
     bool active;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        aSource = GetComponent<AudioSource>();
         active = true;
     }
 
@@ -29,6 +31,7 @@ public class Manhole : MonoBehaviour
             //    rope.PlayerPoint = transform;
             //}
             playerObject.SetActive(false);
+            aSource.PlayOneShot(hurtSound);
             // Destroy(col.gameObject);
             Invoke("ActivatePlayer", timeInTheHole);
             Invoke("Reactivate", timeInTheHole*2);

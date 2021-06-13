@@ -69,6 +69,7 @@ MonoBehaviour:
   transparency: 1
   material: {fileID: 2100000, guid: a57dedfb2364bf14da10b832517650f1, type: 2}
   achievedSound: {fileID: 8300000, guid: 41f6ec79c44cb8643a5125b485249737, type: 3}
+  secondsExtra: 30
   ThetaScale: 0.01
   radius: 1
 --- !u!120 &7900972434450090293

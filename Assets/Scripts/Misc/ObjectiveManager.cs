@@ -6,8 +6,9 @@ public class ObjectiveManager : MonoBehaviour
 {
 
     [SerializeField] Arrow arrow;
-    [SerializeField] List<Objective> objectives; 
-
+    [SerializeField] List<Objective> objectives;
+    [SerializeField] int initialTimeInSeconds = 60;
+    [SerializeField] TimerGUI timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,13 +17,16 @@ public class ObjectiveManager : MonoBehaviour
         {
             obj.objectiveReachedEvent += ActivateNewObjective;
         }
+        ActivateNewObjective(null);
+        AddSecondsToGeneralTimer(initialTimeInSeconds, false);
     }
 
 
 
     private void ActivateNewObjective(Objective previous)
     {
-        Objective[] objs = new Objective[objectives.Count - 1];
+        if (previous != null) AddSecondsToGeneralTimer(previous.SecondsExtra); 
+        Objective[] objs = new Objective[previous == null? objectives.Count : objectives.Count - 1];
         int i = 0;
         foreach (Objective obj in objectives)
         {
@@ -38,5 +42,12 @@ public class ObjectiveManager : MonoBehaviour
         newObj.gameObject.SetActive(true);
         arrow.SetObjective(newObj.transform);
 
+    }
+
+
+    private void AddSecondsToGeneralTimer(int seconds, bool  show = true)
+    {
+        if(show) GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerNotifications>().ShowText("+" + seconds,3);
+        timer.AddSeconds(seconds);
     }
 }
