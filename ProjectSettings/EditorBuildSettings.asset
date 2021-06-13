@@ -10,11 +10,5 @@ EditorBuildSettings:
     guid: d38de47d7b55072489d5963f8bd8efd0
   - enabled: 1
     path: Assets/Scenes/Carlos.unity
-    guid: 78e0e6aa2d8a2fe49b4e1a893be0f748
-  - enabled: 1
-    path: Assets/Scenes/PabloMenu.unity
-    guid: 78e5fee807ffe1a4385f8c5add76d5db
-  - enabled: 1
-    path: Assets/Scenes/Pablo.unity
-    guid: 759057a5cce871a44b0bb8b53ef588ad
+    guid: d96c3155a6c95084f96656e59872a256
   m_configObjects: {}

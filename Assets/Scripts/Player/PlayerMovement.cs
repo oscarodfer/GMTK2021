@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEditor.AnimatedValues;
-using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
